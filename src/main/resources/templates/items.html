@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="templates/default">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="templates/default">
 <head>
 <title>Items</title>
 
@@ -10,11 +9,15 @@
 </head>
 <body>
 	<div layout:fragment="content">
-	<div class="segment">
-		<ol> <li th:each="item : ${items}"
-			th:text="${item.name} + ': ' + ${item.description}"> </li>
-		</ol>
-	</div>
+		<div th:if="${searchTerm}" style="border: 1px; border-style:solid; margin:10px; text-align:center; border-radius:5px">			
+				<i class="fa fa-search"></i><span style="padding: 5px" th:utext="${searchTerm}"></span>			
+		</div>
+		<div class="segment">
+			<ol>
+				<li th:each="item : ${items}"
+					th:text="${item.name} + ': ' + ${item.description}"></li>
+			</ol>
+		</div>
 	</div>
 </body>
 </html>
