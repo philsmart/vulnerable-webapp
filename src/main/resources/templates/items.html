@@ -1,0 +1,15 @@
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<title>Items</title>
+
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+	<div class="segment">
+		<ol> <li th:each="item : ${items}"
+			th:text="${item.name} + ': ' + ${item.description}"> </li>
+		</ol>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,56 @@
+.header {
+	display: block;
+	background: black;
+	color: white;
+	padding: 10px;
+}
+
+body {
+	margin: 0;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 15%;
+	background-color: #f1f1f1;
+	position: fixed;
+	height: 100%;
+	overflow: auto;
+}
+
+li a {
+	display: block;
+	color: #000;
+	padding: 8px 16px;
+	text-decoration: none;
+}
+
+.segment {
+	margin: 10px;
+	border: 1px;
+	padding:10px;
+	border-radius:10px;
+	border-style: solid;
+	border-color: black;
+}
+
+li a.active {
+	background-color: #4CAF50;
+	color: white;
+}
+
+li a:hover:not (.active ) {
+	background-color: #555;
+	color: white;
+}
+
+.alert {
+	color: red;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
