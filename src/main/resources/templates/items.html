@@ -1,15 +1,20 @@
-<html xmlns:th="https://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="templates/default">
 <head>
 <title>Items</title>
 
 <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
+	<div layout:fragment="content">
 	<div class="segment">
 		<ol> <li th:each="item : ${items}"
 			th:text="${item.name} + ': ' + ${item.description}"> </li>
 		</ol>
 	</div>
-	
+	</div>
 </body>
 </html>

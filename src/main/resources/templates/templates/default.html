@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+<head>
+<meta charset="UTF-8" />
+<meta name="keywords" content="I love the Evil Dead characters">
+<title>Hack Me Application</title>
+
+<link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap-grid.min.css" />
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+	<div class="header">
+		Welcome to The Website<span style="float: right"><form th:action="@{/logout}"
+				method="post">
+				<button type="submit">
+					<i class="fas fa-sign-out-alt"></i>
+				</button>
+			</form></span>
+	</div>
+	<div class="container">
+
+			<div class="col-md-6" style="max-width: 75%; flex: 0 0 75%;" layout:fragment="content">Page content goes here</div>
+
+		</div>
+	</div>
+
+	<script src="/webjars/jquery/3.3.0/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<th:block layout:fragment="scripts"></th:block>
+</body>
+</html>
