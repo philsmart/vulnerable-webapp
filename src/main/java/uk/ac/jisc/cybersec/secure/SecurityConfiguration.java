@@ -4,6 +4,8 @@ package uk.ac.jisc.cybersec.secure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.server.CookieSameSiteSupplier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,19 +28,39 @@ public class SecurityConfiguration {
     @Value("${sameSiteEnabled:false}")
     public boolean sameSiteEnabled;
 
+    @Value("${httpOnlyCookiesEnabled:false}")
+    public boolean httpOnlyCookiesEnabled;
+
+    @Value("${cspEnabled:false}")
+    public boolean cspEnabled;
+
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/resources/**", "/webjars/**", "/css/**", "/lottery-winners", "/pet-rescue", "/sf-login")
                 .permitAll().anyRequest().authenticated().and().formLogin().failureUrl("/login-failed")
                 .defaultSuccessUrl("/").permitAll().and().logout().logoutUrl("/logout").permitAll().and().csrf()
-                .disable();// .headers().contentSecurityPolicy("script-src 'self'");
+                .disable();
 
         log.info("Is CSRF protection enabled '{}'", csrfEnabled);
         if (csrfEnabled) {
             http.csrf();
         }
+        log.info("Is CSP protection enabled '{}'", cspEnabled);
+        if (cspEnabled) {
+            http.headers().contentSecurityPolicy("script-src 'self'");
+        }
         return http.build();
+    }
+
+    @Bean
+    public WebServerFactoryCustomizer<TomcatServletWebServerFactory> tomcatCustomizer() {
+        log.info("Are HttpOnly session cookies set '{}'", httpOnlyCookiesEnabled);
+        if (httpOnlyCookiesEnabled) {
+            return tomcat -> tomcat.addContextCustomizers(context -> context.setUseHttpOnly(true));
+        } else {
+            return tomcat -> tomcat.addContextCustomizers(context -> context.setUseHttpOnly(false));
+        }
     }
 
     @Bean
