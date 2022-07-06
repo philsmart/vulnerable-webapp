@@ -41,7 +41,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             }
         }
         return new CustomUserDetails(username, foundUser.getPassword(), foundUser.isEnabled(), true, true, true,
-                authorities);
+                authorities, foundUser);
     }
 
 }

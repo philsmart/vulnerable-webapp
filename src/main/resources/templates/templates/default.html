@@ -14,8 +14,11 @@
 </head>
 <body>
 	<div class="header">
-		Welcome to The Website<span style="float: right"><form th:action="@{/logout}"
+		Welcome to The Website <span style="margin-left:10px"><a href="/"><i class="fas fa-home"></i>Home</a></span><span style="float: right">
+		
+		<form th:action="@{/logout}"
 				method="post">
+				
 				<button type="submit">
 					<i class="fas fa-sign-out-alt"></i>
 				</button>

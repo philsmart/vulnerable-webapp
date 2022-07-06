@@ -36,10 +36,18 @@ public class InitDb {
         user.setUsername("tjones");
         user.setEnabled(true);
         user.setPassword(constructPasswordHash("newpassword"));
-        admin.setRoles(Set.of("ROLE_USER"));
+        user.setRoles(Set.of("ROLE_USER"));
+        
+        final User userTwo = new User();
+        userTwo.setUsername("jkirk");
+        userTwo.setEnabled(true);
+        userTwo.setPassword(constructPasswordHash("spock"));
+        userTwo.setRoles(Set.of("ROLE_USER"));
 
         userRepo.save(admin);
         userRepo.save(user);
+        userRepo.save(userTwo);
+
 
     }
 

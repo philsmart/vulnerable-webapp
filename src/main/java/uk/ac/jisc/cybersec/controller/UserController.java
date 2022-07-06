@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import uk.ac.jisc.cybersec.dto.UserAction;
@@ -23,16 +24,17 @@ public class UserController {
     @Autowired
     private UserRepository userRepo;
 
-    @GetMapping("/user-prefs")
+    @GetMapping("/user-prefs/{id}")
     @PreAuthorize("isAuthenticated()")
-    public String getUserAdminPage(final Model model, final String id) {
-
+    public String getUserAdminPage(final Model model, @PathVariable final String id) {
+        log.debug("Getting user-prefs for user '{}'", id);
         if (id == null) {
             return "user-prefs";
         }
         final Long userIdLong = Long.parseLong(id);
         log.debug("Searching for username by ID [{}]", userIdLong);
         final var user = userRepo.findById(userIdLong);
+        log.debug("Found '{}' user", user);
         if (user.isPresent()) {
             model.addAttribute("user", user.get());
         }
