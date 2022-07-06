@@ -3,7 +3,6 @@ package uk.ac.jisc.cybersec;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -30,13 +29,17 @@ public class InitDb {
         final User admin = new User();
         admin.setUsername("jblogs");
         admin.setEnabled(true);
-        admin.setPropertyCustodianCode(99);
-        admin.setPassword(constructPasswordHash("password"));
-        final Set<String> set = new HashSet<>();
-        set.add("ROLE_ADMIN");
-        admin.setRoles(set);
+        admin.setPassword(constructPasswordHash("pa55word"));
+        admin.setRoles(Set.of("ROLE_ADMIN"));
+
+        final User user = new User();
+        user.setUsername("tjones");
+        user.setEnabled(true);
+        user.setPassword(constructPasswordHash("newpassword"));
+        admin.setRoles(Set.of("ROLE_USER"));
 
         userRepo.save(admin);
+        userRepo.save(user);
 
     }
 
@@ -45,7 +48,7 @@ public class InitDb {
             final MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(password.getBytes());
             final byte[] hash = md.digest();
-            final String composedHash = "{MD5}" + new String(Hex.encode(hash));
+            final String composedHash = new String(Hex.encode(hash));
 
             return composedHash;
         } catch (final NoSuchAlgorithmException e) {

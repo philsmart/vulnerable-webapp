@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="templates/default">
+<head>
+<body>
+	<div layout:fragment="content">
+		<h1>User Administration</h1>
+
+		<div style="text-align:center; padding-bottom:20px">
+		Search
+			<form id="searchForm" th:action="@{/user-admin}" th:method="GET"
+				th:object="${userAction}">
+				<input type="text"  th:id="searchUsername"
+					th:name="username" />
+				<button id="searchButton" type="submit">
+					<i class="fas fa-search"></i>
+				</button>
+			</form>
+		</div>
+		<hr/>
+
+		<table>
+			<tr>
+				<th>Username</th>
+				<th>New Username</th>
+				<th>User Enabled</th>
+			</tr>
+
+			<tr th:each="user, row: ${users}">
+				<td th:text="${user?.username}" />
+				<td>
+					<form id="userForm" th:action="@{/user-admin}" th:method="post"
+						th:object="${userAction}">
+						<input type="hidden" th:value="${user.id}" th:id="id" th:name="id" />
+						<input type="text" th:value="${user.username}" th:id="newUsername"
+							th:name="username" />
+						<button type="submit">
+							<i class="fas fa-pen-square"></i>
+						</button>
+					</form>
+				</td>
+				<td th:text="${user?.enabled}" />
+			</tr>
+
+		</table>
+
+	</div>
+</body>
+
+</html>

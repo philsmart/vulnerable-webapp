@@ -15,19 +15,21 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "user")
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String username;
 
     private String password;
 
-    private int propertyCustodianCode;
-
     private boolean enabled;
 
-    @Transient private String passwordConfirm;
+    @Transient
+    private String passwordConfirm;
 
-    @ElementCollection(fetch = FetchType.EAGER) private Set<String> roles;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> roles;
 
     public Long getId() {
         return id;
@@ -81,19 +83,5 @@ public class User {
      */
     public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
-    }
-
-    /**
-     * @return Returns the propertyCustodianCode.
-     */
-    public int getPropertyCustodianCode() {
-        return propertyCustodianCode;
-    }
-
-    /**
-     * @param propertyCustodianCode The propertyCustodianCode to set.
-     */
-    public void setPropertyCustodianCode(final int propertyCustodianCode) {
-        this.propertyCustodianCode = propertyCustodianCode;
     }
 }

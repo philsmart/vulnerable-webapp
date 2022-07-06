@@ -12,7 +12,7 @@ public class CustomUserDetails extends User {
 
     public CustomUserDetails(final String username, final String password, final boolean enabled,
             final boolean accountNonExpired, final boolean credentialsNonExpired, final boolean accountNonLocked,
-            final Collection<? extends GrantedAuthority> authorities, final int propertyCustodianCode) {
+            final Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 
     }
