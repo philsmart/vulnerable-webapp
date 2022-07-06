@@ -9,6 +9,6 @@ class IndexController {
 
     @RequestMapping("/")
     public String index() {
-        return "redirect:items";
+        return "home";
     }
 }
