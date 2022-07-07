@@ -71,7 +71,7 @@ public class PasswordController {
             }
         }
 
-        log.debug("Found user [{}] to reset password", user);
+        log.debug("Found user [{}] to reset password", user != null ? user.getUsername() : "not-found");
         if (user == null) {
             model.addAttribute("result", "done");
             return "password-reset";
@@ -80,7 +80,7 @@ public class PasswordController {
             final MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(passwordReset.getNewPassword().getBytes());
             final byte[] hash = md.digest();
-            user.setPassword("{MD5}" + new String(Hex.encode(hash)));
+            user.setPassword(new String(Hex.encode(hash)));
             userRepo.save(user);
             model.addAttribute("result", "done");
         } catch (final NoSuchAlgorithmException e) {
