@@ -27,5 +27,5 @@ jobs:
     - name: Upload jar artifact
       uses: actions/upload-artifact@v2
       with:
-        name: vulnerable-webapp
+        name: vulnerable-webapp-latest.jar
         path: target/vulnerable-webapp*.jar
