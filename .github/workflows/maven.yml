@@ -24,3 +24,8 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Upload jar artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: vulnerable-webapp
+        path: target/vulnerable-webapp*.jar
