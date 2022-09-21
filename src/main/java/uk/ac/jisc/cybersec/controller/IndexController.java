@@ -10,11 +10,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import uk.ac.jisc.cybersec.secure.CustomUserDetails;
 
+/**
+ * The home page controller.
+ */
 @Controller
 class IndexController {
     
     private static final Logger log = LoggerFactory.getLogger(IndexController.class);
 
+    /**
+     * Get the index or root or homepage. 
+     * 
+     * @param model the ui model
+     * @param user the authenticated user
+     * 
+     * @return the home page.
+     */
     @RequestMapping("/")
     public String index(Model model, Authentication user) {
         if (user.getPrincipal() instanceof CustomUserDetails) {
