@@ -26,6 +26,14 @@ public class AdminController {
     @Autowired
     private UserRepository userRepo;
 
+    /**
+     * Get the user administration page. 
+     * 
+     * @param model the ui model
+     * @param username the username
+     * 
+     * @return the user-admin page.
+     */
     @GetMapping("/user-admin")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String getUserAdminPage(final Model model, final String username) {
@@ -42,6 +50,13 @@ public class AdminController {
         return "user-admin";
     }
 
+    /**
+     * Update the user.
+     * 
+     * @param userAction the action that holds the information to update
+     * 
+     * @return the user-admin page via a redirect.
+     */
     @PostMapping("/user-admin")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String updateUsername(@ModelAttribute("userAction") final UserAction userAction) {

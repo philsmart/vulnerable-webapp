@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 
+/**
+ * Entry point to the vulnerable web application.
+ */
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableGlobalMethodSecurity(prePostEnabled = true)
