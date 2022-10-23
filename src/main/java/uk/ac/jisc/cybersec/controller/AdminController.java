@@ -2,6 +2,7 @@
 package uk.ac.jisc.cybersec.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,27 @@ public class AdminController {
             model.addAttribute(new UserAction());
         }
         return "user-admin";
+    }
+    
+    
+    /**
+     * Update the user's displayName.
+     * 
+     * @param userAction the action that holds the information to update
+     * 
+     * @return the user-admin page via a redirect.
+     */
+    @PostMapping("/user-admin-display-name")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String updateDisplayName(@ModelAttribute("userAction") final UserAction userAction) {
+        log.debug("Updating [{}] to have displayName [{}]", userAction.getId(), userAction.getUsername());
+        Optional<User> user = userRepo.findById(userAction.getId());
+        if (user.isPresent()) {
+        	// Display name not validated here
+        	user.get().setDisplayName(userAction.getDisplayName());
+        	userRepo.save(user.get());
+        }        
+        return "redirect:/user-admin";
     }
 
     /**

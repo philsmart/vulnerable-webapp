@@ -20,6 +20,9 @@ public class User {
     private Long id;
 
     private String username;
+    
+    /** The name to display on HTML pages.*/
+    private String displayName;
 
     private String password;
 
@@ -84,4 +87,22 @@ public class User {
     public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
     }
+
+	/**
+	 * Get the displayName.
+	 *
+	 * @return the displayName
+	 */
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	/**
+	 * Set the displayName.
+	 *
+	 * @param displayName the displayName to set
+	 */
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
 }

@@ -24,6 +24,7 @@
 			<tr>
 				<th>Username</th>
 				<th>New Username</th>
+				<th>Display Name</th>
 				<th>User Enabled</th>
 			</tr>
 
@@ -35,6 +36,17 @@
 						<input type="hidden" th:value="${user.id}" th:id="id" th:name="id" />
 						<input type="text" th:value="${user.username}" th:id="newUsername"
 							th:name="username" />
+						<button type="submit">
+							<i class="fas fa-pen-square"></i>
+						</button>
+					</form>
+				</td>
+				<td>
+					<form id="userForm" th:action="@{/user-admin-display-name}" th:method="post"
+						th:object="${userAction}">
+						<input type="hidden" th:value="${user.id}" th:id="id" th:name="id" />
+						<input type="text" th:value="${user.displayName}" th:id="displayName"
+							th:name="displayName" />
 						<button type="submit">
 							<i class="fas fa-pen-square"></i>
 						</button>

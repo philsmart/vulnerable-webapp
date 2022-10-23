@@ -28,18 +28,21 @@ public class InitDb {
     public void initDatabase() throws NoSuchAlgorithmException {
         final User admin = new User();
         admin.setUsername("jblogs");
+        admin.setDisplayName("Joe Blogs");
         admin.setEnabled(true);
         admin.setPassword(constructPasswordHash("pa55word"));
         admin.setRoles(Set.of("ROLE_ADMIN"));
 
         final User user = new User();
         user.setUsername("tjones");
+        user.setDisplayName("Tom Jones");
         user.setEnabled(true);
         user.setPassword(constructPasswordHash("newpassword"));
         user.setRoles(Set.of("ROLE_USER"));
         
         final User userTwo = new User();
         userTwo.setUsername("jkirk");
+        userTwo.setDisplayName("James Kirk");
         userTwo.setEnabled(true);
         userTwo.setPassword(constructPasswordHash("spock"));
         userTwo.setRoles(Set.of("ROLE_USER"));

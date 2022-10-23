@@ -6,6 +6,8 @@ public class UserAction {
     private long id;
 
     private String username;
+    
+    private String displayName;
 
     /**
      * @return Returns the newUsername.
@@ -34,5 +36,23 @@ public class UserAction {
     public void setId(final long id) {
         this.id = id;
     }
+
+	/**
+	 * Get the displayName.
+	 *
+	 * @return the displayName
+	 */
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	/**
+	 * Set the displayName.
+	 *
+	 * @param displayName the displayName to set
+	 */
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
 
 }
