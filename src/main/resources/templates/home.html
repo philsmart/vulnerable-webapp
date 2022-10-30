@@ -10,7 +10,7 @@
 <body>
 	<div layout:fragment="content">
 	
-		<h2> Welcome: <span th:if="${#authentication.getPrincipal() != null}" th:utext ="${#authentication.getPrincipal().getUser().getDisplayName()}"></span></h2>
+		<h2> Welcome: <span th:if="${#authentication.getPrincipal() != null}" th:text ="${#authentication.getPrincipal().getUser().getDisplayName()}"></span></h2>
 
 		<table style="margin: 10px">
 			<tr>
