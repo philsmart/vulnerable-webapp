@@ -13,6 +13,13 @@
 		<Root level="info">
 			<AppenderRef ref="Console" />
 		</Root>
+		<Logger name="com.unboundid" level="trace">
+			<AppenderRef ref="Console" />
+		</Logger>
+		
+		<Logger name="org.apache.logging.log4j" level="debug">
+			<AppenderRef ref="Console" />
+		</Logger>
 		<Logger name="uk.ac.jisc" level="trace">
 			<AppenderRef ref="Console" />
 		</Logger>

