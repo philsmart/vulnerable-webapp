@@ -10,17 +10,17 @@
 
 	<Loggers>
 		<!-- LOG everything at INFO level -->
-		<Root level="info">
+		<Root level="info" additivity="false">
 			<AppenderRef ref="Console" />
 		</Root>
-		<Logger name="com.unboundid" level="trace">
+		<Logger name="com.unboundid" level="trace" additivity="false">
 			<AppenderRef ref="Console" />
 		</Logger>
 		
-		<Logger name="org.apache.logging.log4j" level="debug">
+		<Logger name="org.apache.logging.log4j" level="debug" additivity="false">
 			<AppenderRef ref="Console" />
 		</Logger>
-		<Logger name="uk.ac.jisc" level="trace">
+		<Logger name="uk.ac.jisc" level="trace" additivity="false">
 			<AppenderRef ref="Console" />
 		</Logger>
 	</Loggers>

