@@ -12,7 +12,7 @@ An application with various vulnerabilities for testing
 
 ## CVE-2021-44228 (log4shell)
 
-To enable the in-memory LDAP server that is required for the JNDI lookup, you must run the application using the `ldap` spring profile e.g.:
+To enable the in-memory LDAP server that is required for the JNDI lookup, you must run the application (v1.5.0 onward which includes the vulnerable version of log4j) using the `ldap` spring profile e.g.:
 
 ```bash
 java -Dspring.profiles.active=ldap -jar vulnerable-webapp-[latest].jar
@@ -81,14 +81,14 @@ public class RceReverseShellExploit {
 }
 ```
 
-To complete the attack and establish a remote network connection to the compromised web-server, you, as the *bad-actor*, must start a listener on port `8083`. For example, using `netcat`:
+To complete the attack and establish a remote network connection to the compromised web-server, you, as the *bad-actor*, must start a listener on port `8083` on `localhost` (in a real-world attack, this would be a remote server). For example, using `netcat`:
 
 
 ```bash
 nc -l 8083
 ```
 
-Once the connection is established, can can run bash commands inside the listener you started above e.g. type `ls` into the terminal window running `netcat`.
+Once the connection is established, you can run bash commands inside the listener you started above e.g. type `ls` into the terminal window running `netcat`.
 
 
 #### Note on Java Version
