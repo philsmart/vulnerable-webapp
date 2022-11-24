@@ -50,6 +50,8 @@ public class SecurityConfiguration {
         if (cspEnabled) {
             http.headers().contentSecurityPolicy("script-src 'self'");
         }
+        // Allow iframeing - bad.
+        http.headers().frameOptions().disable();
         return http.build();
     }
 
