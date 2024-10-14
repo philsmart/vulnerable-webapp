@@ -68,11 +68,11 @@ public class SecurityConfiguration {
     @Bean
     public CookieSameSiteSupplier applicationCookieSameSiteSupplier() {
         log.info("Samesite mode set as '{}'", sameSiteEnabled);
-        if (sameSiteEnabled == "strict") {
+        if (sameSiteEnabled.equals("strict")) {
             return CookieSameSiteSupplier.ofStrict();
-        } else if (sameSiteEnabled == "lax") {
+        } else if (sameSiteEnabled.equals("lax")) {
             return CookieSameSiteSupplier.ofLax();
-        } else if (sameSiteEnabled == "none") {
+        } else if (sameSiteEnabled.equals("none")) {
             return CookieSameSiteSupplier.ofNone();
         } else {
             throw new IllegalStateException("sameSiteEnabled must be strict, lax, or none");
