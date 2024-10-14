@@ -25,7 +25,7 @@ public class SecurityConfiguration {
     @Value("${csrfEnabled:false}")
     public boolean csrfEnabled;
 
-    @Value("${sameSiteEnabled:'lax'}") // strict, lax, none
+    @Value("${sameSiteEnabled:lax}") // strict, lax, none
     public String sameSiteEnabled;
 
     @Value("${httpOnlyCookiesEnabled:false}")
