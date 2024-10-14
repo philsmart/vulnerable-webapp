@@ -25,8 +25,8 @@ public class SecurityConfiguration {
     @Value("${csrfEnabled:false}")
     public boolean csrfEnabled;
 
-    @Value("${sameSiteEnabled:false}")
-    public boolean sameSiteEnabled;
+    @Value("${sameSiteEnabled:'lax'}") // strict, lax, none
+    public String sameSiteEnabled;
 
     @Value("${httpOnlyCookiesEnabled:false}")
     public boolean httpOnlyCookiesEnabled;
@@ -67,11 +67,15 @@ public class SecurityConfiguration {
 
     @Bean
     public CookieSameSiteSupplier applicationCookieSameSiteSupplier() {
-        log.info("Is samesite protection enabled '{}'", sameSiteEnabled);
-        if (sameSiteEnabled) {
+        log.info("Samesite mode set as '{}'", sameSiteEnabled);
+        if (sameSiteEnabled == "strict") {
             return CookieSameSiteSupplier.ofStrict();
-        } else {
+        } else if (sameSiteEnabled == "lax") {
             return CookieSameSiteSupplier.ofLax();
+        } else if (sameSiteEnabled == "none") {
+            return CookieSameSiteSupplier.ofNone();
+        } else {
+            throw new IllegalStateException("sameSiteEnabled must be strict, lax, or none");
         }
 
     }
