@@ -71,7 +71,7 @@ public class SecurityConfiguration {
         if (sameSiteEnabled) {
             return CookieSameSiteSupplier.ofStrict();
         } else {
-            return CookieSameSiteSupplier.ofNone();
+            return CookieSameSiteSupplier.ofLax();
         }
 
     }
