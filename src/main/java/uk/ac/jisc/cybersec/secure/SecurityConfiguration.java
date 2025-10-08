@@ -1,6 +1,12 @@
 
 package uk.ac.jisc.cybersec.secure;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,9 +18,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @EnableWebSecurity
 @Configuration
@@ -25,7 +35,7 @@ public class SecurityConfiguration {
     @Value("${csrfEnabled:false}")
     public boolean csrfEnabled;
 
-    @Value("${sameSiteEnabled:lax}") // strict, lax, none
+    @Value("${sameSiteEnabled:none}") // strict, lax, none
     public String sameSiteEnabled;
 
     @Value("${httpOnlyCookiesEnabled:false}")
@@ -37,9 +47,29 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/resources/**", "/webjars/**", "/css/**", "/lottery-winners", "/pet-rescue", "/sf-login", "/rce/**")
+                .antMatchers("/resources/**", "/webjars/**", "/css/**", "/lottery-winners", "/pet-rescue", "/sf-login", "/rce/**","/3pc","/iframe-me", "/img/**")
                 .permitAll().anyRequest().authenticated().and().formLogin().failureUrl("/login-failed")
-                .defaultSuccessUrl("/").permitAll().and().logout().logoutUrl("/logout").permitAll().and().csrf()
+                .failureHandler(new AuthenticationFailureHandler() {
+					
+					@Override
+					public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+							AuthenticationException exception) throws IOException, ServletException {
+						log.info("Authentication failed!");
+						response.sendRedirect("/login-failed");
+						
+					}
+				})
+                .successHandler(new AuthenticationSuccessHandler() {
+					
+					@Override
+					public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+							Authentication authentication) throws IOException, ServletException {
+						log.info("Success!");
+						response.sendRedirect("/");
+						
+					}
+				})
+                .and().logout().logoutUrl("/logout").permitAll().and().csrf()
                 .disable();
 
         log.info("Is CSRF protection enabled '{}'", csrfEnabled);
@@ -72,10 +102,8 @@ public class SecurityConfiguration {
             return CookieSameSiteSupplier.ofStrict();
         } else if (sameSiteEnabled.equals("lax")) {
             return CookieSameSiteSupplier.ofLax();
-        } else if (sameSiteEnabled.equals("none")) {
-            return CookieSameSiteSupplier.ofNone();
         } else {
-            throw new IllegalStateException("sameSiteEnabled must be strict, lax, or none");
+            return CookieSameSiteSupplier.ofNone();
         }
 
     }
