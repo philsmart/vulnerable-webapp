@@ -23,6 +23,7 @@
 		<table>
 			<tr>
 				<th>Username</th>
+				<th>Display Name</th>
 				<th>New Username</th>
 				<th>Display Name</th>
 				<th>User Enabled</th>
@@ -30,6 +31,7 @@
 
 			<tr th:each="user, row: ${users}">
 				<td th:text="${user?.username}" />
+				<td th:utext="${user?.displayName}"/>
 				<td>
 					<form id="userForm" th:action="@{/user-admin}" th:method="post"
 						th:object="${userAction}">

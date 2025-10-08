@@ -15,11 +15,12 @@
 				<tr>
 					<th>Username</th>
 					<th>New Username</th>
+					<th>New DisplayName</th>
 					<th>User Enabled</th>
 				</tr>
 
 				<tr>
-					<td th:text="${user?.username}" />
+					<td th:text="${user?.username}" />					
 					<td>
 						<form id="userForm" th:action="@{/user-prefs}" th:method="post"
 							th:object="${userAction}">
@@ -31,6 +32,17 @@
 							</button>
 						</form>
 					</td>
+					<td>
+                        <form id="displayNameForm" th:action="@{/user-prefs-displayname}" th:method="post"
+                            th:object="${userAction}">
+                            <input type="hidden" th:value="${user?.id}" th:id="id"
+                                th:name="id" /> <input type="text" th:value="${user?.displayName}"
+                                th:id="newDisplayName" th:name="displayName" />
+                            <button type="submit">
+                                <i class="fas fa-pen-square"></i>
+                            </button>
+                        </form>
+                    </td>
 					<td th:text="${user?.enabled}" />
 				</tr>
 
