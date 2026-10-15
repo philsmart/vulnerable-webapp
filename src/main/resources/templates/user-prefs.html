@@ -20,7 +20,7 @@
 				</tr>
 
 				<tr>
-					<td th:text="${user?.username}" />					
+					<td th:utext="${user?.username}" />					
 					<td>
 						<form id="userForm" th:action="@{/user-prefs}" th:method="post"
 							th:object="${userAction}">
